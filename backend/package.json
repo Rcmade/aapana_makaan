@@ -1,0 +1,47 @@
+{
+  "name": "three-legant-backend",
+  "scripts": {
+    "dev": "tsx watch src/index.ts --clear-screen=false",
+    "build": "node esbuild.config.js",
+    "serve": "NODE_ENV=production pm2 start dist/index.js --name three-legant.rcmade.me",
+    "start": "pm2 start dist/index.js --three-legant.rcmade.me --env production",
+    "reload": "pm2 reload three-legant.rcmade.me --env production",
+    "deploy": "pnpm install && pnpm build && (pm2 show three-legant.rcmade.me > /dev/null && pm2 reload three-legant.rcmade.me || pm2 start dist/index.js --name three-legant.rcmade.me --env production)",
+    "codegen": "bunx drizzle-kit generate  --config=./src/db/drizzle.config.ts  --custom",
+    "push": "bunx drizzle-kit push  --config=./src/db/drizzle.config.ts",
+    "drop": "bunx drizzle-kit drop  --config=./src/db/drizzle.config.ts",
+    "migrate": "bun ./src/db/migrate.ts",
+    "db-studio": "bunx drizzle-kit studio  --config=./src/db/drizzle.config.ts",
+    "db-update": "bun run codegen && bun run migrate && bun run push",
+    "gen-types": "bun src/generateTypesWithTSMorph.ts",
+    "webhook": "stripe listen --forward-to localhost:4000/api/webhooks/order-payment"
+  },
+  "dependencies": {
+    "@auth/core": "^0.35.3",
+    "@hono/auth-js": "^1.0.10",
+    "@hono/node-server": "^1.13.1",
+    "@hono/zod-validator": "^0.2.2",
+    "axios": "^1.7.7",
+    "cloudinary": "^2.5.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
+    "drizzle-zod": "^0.5.1",
+    "esbuild": "^0.24.0",
+    "hono": "^4.6.2",
+    "moment": "^2.30.1",
+    "nanoid": "^5.0.7",
+    "postgres": "3.3",
+    "stripe": "^17.2.0",
+    "terser": "^5.34.1",
+    "ts-morph": "^24.0.0",
+    "typescript": "^5.6.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.0.1",
+    "@types/node": "^20.16.9",
+    "drizzle-kit": "npm:@binochoi/drizzle-kit@0.24.17",
+    "esbuild-plugin-alias": "^0.2.1",
+    "tsx": "^4.7.1"
+  }
+}

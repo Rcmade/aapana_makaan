@@ -1,0 +1,25 @@
+{
+  "FdrdC4NHEWjl": {
+    "numberOfChild": 1,
+    "numberOfImages": 3,
+    "isParent": true,
+    "childId": [
+      "4-ulJygj3OKK"
+    ],
+    "imgUrl": [
+      "/images/products/TV/SAMSUNG 163 cm (65 inch) QLED Ultra HD (4K) Smart TV 2.webp",
+      "/images/products/TV/SAMSUNG 163 cm (65 inch) QLED Ultra HD (4K) Smart TV 2.webp",
+      "/images/products/TV/iFFALCON by TCL F53 100 cm (40 inch) Full HD LED Smart Android TV with Android 11 (40F53) 1.webp"
+    ]
+  },
+  "4-ulJygj3OKK": {
+    "numberOfChild": 0,
+    "numberOfImages": 2,
+    "isParent": false,
+    "childId": [],
+    "imgUrl": [
+      "/images/products/TV/SAMSUNG 163 cm (65 inch) QLED Ultra HD (4K) Smart TV 4.webp",
+      "/images/products/TV/SAMSUNG Series 8 123 cm (49 inch) Ultra HD (4K) LED Smart Tizen TV (49NU8000) 4.webp"
+    ]
+  }
+}

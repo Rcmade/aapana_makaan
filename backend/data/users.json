@@ -1,0 +1,32 @@
+[
+    {
+        "id": "MLKpPv3VZMR",
+        "role": "USER",
+        "name": "i am seller",
+        "email": "rahulchourasiya4567@gmail.com",
+        "phone": null,
+        "image": null,
+        "createdAt": "2024-09-24 17:36:16.231157",
+        "updatedAt": "2024-09-24 17:36:16.231157"
+    },
+    {
+        "id": "Xs5uQcEudFe",
+        "role": "USER",
+        "name": "RAHUL Chourasiya",
+        "email": "rcmade12345@gmail.com",
+        "phone": null,
+        "image": null,
+        "createdAt": "2024-09-24 17:38:01.670399",
+        "updatedAt": "2024-10-08 14:39:55.712317"
+    },
+    {
+        "id": "XSTaAGma3Kw",
+        "role": "USER",
+        "name": "Rahul Chourasiya",
+        "email": "rahulchourasiya0204@gmail.com",
+        "phone": null,
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocKev9lrlLo8zsc-72iCQ7w7KLAt40Q9Nzes7jy4dSmJ8IGlJK0=s96-c",
+        "createdAt": "2024-09-24 17:38:01.686616",
+        "updatedAt": "2024-10-10 12:45:56.797"
+    }
+]
