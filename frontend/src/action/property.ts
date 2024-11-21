@@ -1,12 +1,15 @@
-import "server-only"
+import "server-only";
 import {
   getPropertyDetailsGetApi,
+  getTopOfferPropertyGetApi,
   getUserPropertiesGetApi,
 } from "@/constant/apiRoutes";
 import { fetcher } from "@/lib/utils/apiUtils";
 import { getBackendUrl } from "@/lib/utils/stringUtils";
 import {
   PropertyDetailsResponseT,
+  TopOfferPropertyResponseT,
+  // TopOfferPropertyResponseT,
   UserPropertyResponseT,
 } from "@/types/apiResponse";
 import { headers } from "next/headers";
@@ -51,5 +54,25 @@ export const getUserPropertyDetails = async (
   } catch (error) {
     console.error("Error fetching property details", error);
     return null;
+  }
+};
+
+export const getTopOfferProperties = async () => {
+  try {
+    const data: TopOfferPropertyResponseT = await fetcher(
+      `${getBackendUrl(getTopOfferPropertyGetApi)}`,
+      {
+        next: {
+          revalidate: 60 * 60 * 24,
+          tags: [getTopOfferPropertyGetApi],
+        },
+      },
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching user properties", error);
+    return {
+      properties: [],
+    };
   }
 };

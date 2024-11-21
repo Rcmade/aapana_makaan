@@ -1,0 +1,573 @@
+"use client";
+
+import React, { useState, useRef, useEffect, FC } from "react";
+import { Input } from "@/components/ui/input";
+import { extractAddressComponents } from "@/lib/utils/formateData";
+import { Children, PropertyFormSchemaT } from "@/types";
+import useMapLoader from "@/hooks/useMapLoader";
+
+type Address = PropertyFormSchemaT["address"] & {};
+
+interface AutoCompleteSearchInputProps {
+  value?: string;
+  onChange: (address: Address) => void;
+  isApiNeedToLoad: boolean;
+}
+
+const AutoCompleteSearchInput: FC<AutoCompleteSearchInputProps> = ({
+  isApiNeedToLoad,
+  value,
+  onChange,
+}) => {
+  return isApiNeedToLoad ? (
+    <>
+      <ApiLoader>
+        <PlaceAutocomplete
+          value={value}
+          onPlaceSelect={(place) => {
+            if (!place.geometry?.location) return;
+            const latLng = {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+            };
+            onChange(extractAddressComponents(place, latLng));
+          }}
+        />
+      </ApiLoader>
+    </>
+  ) : (
+    <PlaceAutocomplete
+      value={value}
+      onPlaceSelect={(place) => {
+        if (!place.geometry?.location) return;
+        const latLng = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        };
+        onChange(extractAddressComponents(place, latLng));
+      }}
+    />
+  );
+};
+
+interface PlaceAutocompleteProps {
+  // info: "basic" | "withLatLng";
+  value?: string;
+  onPlaceSelect: (place: google.maps.places.PlaceResult) => void;
+}
+
+const PlaceAutocomplete: FC<PlaceAutocompleteProps> = ({
+  value,
+  onPlaceSelect,
+}) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [autocomplete, setAutocomplete] =
+    useState<google.maps.places.Autocomplete | null>(null);
+
+  useEffect(() => {
+    if (!inputRef.current) return;
+
+    const options = {
+      fields: ["geometry", "name", "formatted_address", "address_components"],
+    };
+    const autoCompleteInstance = new window.google.maps.places.Autocomplete(
+      inputRef.current,
+      options,
+    );
+    setAutocomplete(autoCompleteInstance);
+
+    // Cleanup listener on unmount
+    const listener = autoCompleteInstance.addListener("place_changed", () => {
+      const place = autoCompleteInstance.getPlace();
+      onPlaceSelect(place);
+    });
+
+    return () => {
+      listener.remove();
+    };
+  }, [onPlaceSelect]);
+
+  return (
+    <Input
+      ref={inputRef}
+      placeholder="Search for a location..."
+      defaultValue={value}
+    />
+  );
+};
+
+const ApiLoader = ({ children }: Children) => {
+  const { isLoaded } = useMapLoader();
+
+  return isLoaded ? <>{children}</> : null;
+};
+
+export default AutoCompleteSearchInput;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+
+import React, { useState, useRef, useEffect, FC } from "react";
+import { Input } from "@/components/ui/input";
+import { extractAddressComponents } from "@/lib/utils/formateData";
+import { PropertyFormSchemaT } from "@/types";
+import useMapLoader from "@/hooks/useMapLoader";
+
+// Type for the Address object
+type Address = PropertyFormSchemaT["address"] & {};
+
+interface AutoCompletePlaceSearchInputProps {
+  value?: string;
+  onChange?: (address: Address) => void;
+  isApiNeedToLoad: boolean;
+}
+
+// Main component for the autocomplete search input
+const AutoCompletePlaceSearchInput: FC<AutoCompletePlaceSearchInputProps> = ({
+  isApiNeedToLoad,
+  value,
+  onChange,
+}) => {
+  return isApiNeedToLoad ? (
+    <ApiLoader>
+      <PlaceAutocomplete value={value} onPlaceSelect={onChange} />
+    </ApiLoader>
+  ) : (
+    <PlaceAutocomplete value={value} onPlaceSelect={onChange} />
+  );
+};
+
+interface PlaceAutocompleteProps {
+  value?: string;
+  onPlaceSelect?: (address: Address) => void;
+}
+
+// PlaceAutocomplete component that handles the Google Maps Autocomplete
+const PlaceAutocomplete: FC<PlaceAutocompleteProps> = ({
+  value,
+  onPlaceSelect,
+}) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [autocomplete, setAutocomplete] =
+    useState<google.maps.places.Autocomplete | null>(null);
+
+  // Initialize autocomplete when the component mounts
+  useEffect(() => {
+    if (!inputRef.current) return;
+
+    const options = {
+      fields: ["geometry", "name", "formatted_address", "address_components"],
+    };
+
+    const autoCompleteInstance = new window.google.maps.places.Autocomplete(
+      inputRef.current,
+      options,
+    );
+    setAutocomplete(autoCompleteInstance);
+
+    // Cleanup listener on unmount
+    return () => {
+      if (autoCompleteInstance) {
+        autoCompleteInstance.unbindAll();
+      }
+    };
+  }, []);
+
+  // Add listener for place selection and pass selected place to onPlaceSelect
+  useEffect(() => {
+    if (!autocomplete) return;
+
+    const listener = autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+
+      // Check if the place has a valid geometry and extract the address components
+      if (!place.geometry?.location) return;
+
+      // Extract the address components from the place object
+      const latLng = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      };
+
+      // Transform the PlaceResult into your custom address structure
+      const address: Address = extractAddressComponents(place, latLng);
+
+      // Call the onChange handler with the transformed address
+      if (onPlaceSelect) onPlaceSelect(address);
+    });
+
+    // Cleanup listener when the effect runs again or component unmounts
+    return () => {
+      listener.remove();
+    };
+  }, [autocomplete, onPlaceSelect]);
+
+  return (
+    <Input
+      ref={inputRef}
+      placeholder="Search for a location..."
+      defaultValue={value}
+    />
+  );
+};
+
+// ApiLoader component that waits for the map API to load before rendering children
+const ApiLoader: FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isLoaded } = useMapLoader();
+
+  return isLoaded ? <>{children}</> : null;
+};
+
+export default AutoCompletePlaceSearchInput;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+import React, { useRef, useState } from "react";
+import { ChevronDown, SearchIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Command } from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { Autocomplete } from "@react-google-maps/api";
+import { Input } from "../ui/input";
+import useMapLoader from "@/hooks/useMapLoader";
+import {
+  createQueryString,
+  searchParamsToObject,
+} from "@/lib/utils/stringUtils";
+import { useRouter, useSearchParams } from "next/navigation";
+import { SearchPropertyRequestParamsT } from "@/types/apiResponse";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { detailedPropertyType } from "@/zodSchema/propertySchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { searchPropertiesSchema } from "@/zodSchema/searchSchema";
+import { SearchPropertiesSchemaT } from "@/types";
+import { Form } from "../ui/form";
+import AutoCompletePlaceSearchInput from "./AutoCompletePlaceSearchInput";
+import { handlePopoverOpenChange } from "@/lib/utils";
+
+const PropertySearchInput = () => {
+  const [open, setOpen] = React.useState(false);
+  const searchParams = useSearchParams();
+  const searchParamsObj: SearchPropertyRequestParamsT = searchParamsToObject(
+    searchParams.toString(),
+  );
+
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const { isLoaded } = useMapLoader();
+  const { push } = useRouter();
+
+  const form = useForm<SearchPropertiesSchemaT>({
+    resolver: zodResolver(searchPropertiesSchema),
+    defaultValues: {
+      detailedPropertyType: searchParamsObj.category || "",
+      lat: searchParamsObj.lat || 0,
+      lng: searchParamsObj.lng || 0,
+      search: searchParamsObj.search || "",
+    },
+  });
+
+  const handlePlaceChanged = async () => {
+    const place = autocompleteRef.current?.getPlace();
+    console.log({ place });
+    if (place?.geometry?.location) {
+      const location = place.geometry.location;
+      const latLng = { lat: location.lat(), lng: location.lng() };
+
+      const params = {
+        search: place.formatted_address || "",
+        ...latLng,
+      } satisfies SearchPropertyRequestParamsT;
+
+      form.setValue("lat", params.lat);
+      form.setValue("lng", params.lng);
+      form.setValue("search", params.search);
+    }
+  };
+
+  const onSubmit = async (data: SearchPropertiesSchemaT) => {
+    const str = createQueryString({
+      ...data,
+      category: data?.detailedPropertyType,
+    });
+    // console.log({ str });
+    push(`/search${str}`);
+  };
+
+  const searchInput = form.watch("search");
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex items-center justify-between gap-4 rounded-md bg-primary-foreground px-4 py-4 text-foreground shadow-sm"
+      >
+        <Popover
+          modal
+          open={open}
+          onOpenChange={(open) =>
+            handlePopoverOpenChange(open, setOpen, ".pac-container")
+          }
+        >
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              className="w-[180px] justify-between border-0 px-4 hover:bg-accent"
+              key={form.getValues("search")}
+            >
+              <span>
+                {form.getValues("search")
+                  ? `${form.getValues("search")?.substring(0, 20)}...`
+                  : "Location"}
+              </span>
+              <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent align="start" className="-ml-4 mt-4 w-[26rem] p-0">
+            <AutoCompletePlaceSearchInput
+              isApiNeedToLoad
+              onChange={(a) => {
+                form.setValue("lat", a.lat);
+                form.setValue("lng", a.lng);
+                form.setValue("search", a.completeAddress);
+                setTimeout(() => {
+                  setOpen(false);
+                }, 0);
+              }}
+              value={searchInput}
+            />
+          </PopoverContent>
+        </Popover>
+
+        <span className="block h-6 w-[1px] bg-primary/20"></span>
+        <Select onValueChange={(e) => form.setValue("detailedPropertyType", e)}>
+          <SelectTrigger className="w-[180px] border-0 bg-transparent hover:bg-accent">
+            <SelectValue placeholder="Property Type" />
+          </SelectTrigger>
+          <SelectContent>
+            {detailedPropertyType.map((p) => (
+              <SelectItem key={p} value={p}>
+                {p}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Button type="submit" variant="destructive">
+          Search <SearchIcon className="ml-2 h-4 w-4" />
+        </Button>
+      </form>
+    </Form>
+  );
+};
+
+export default PropertySearchInput;

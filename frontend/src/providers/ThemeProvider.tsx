@@ -7,6 +7,7 @@ import {
 } from "next-themes";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
@@ -25,6 +26,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
           options={{ showSpinner: false }}
           shallowRouting
         />
+        <Toaster position="top-center"/>
       </SessionProvider>
     </NextThemesProvider>
   );

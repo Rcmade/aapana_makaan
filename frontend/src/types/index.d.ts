@@ -69,3 +69,11 @@ export type SearchPropertiesSchemaT = z.infer<typeof searchPropertiesSchema>;
 export type RevalidationType = "tag" | "path";
 
 export type FunctionRuntimePlaceT = "client" | "server";
+
+export type PaginationProps = {
+  // currentPage: number;
+  total: number;
+  limit: number;
+  page: number;
+  currentPage: number;
+};

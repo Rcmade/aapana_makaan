@@ -44,3 +44,14 @@ export const calculateOneYearFromNow = () => {
 export const getRelativeTime = (dateString: string) => {
   return moment(dateString).fromNow(true); // The 'true' argument removes the "ago" suffix
 };
+
+export function isNewlyListed(createdAt: string) {
+  const now = moment();
+  const createdDate = moment(createdAt);
+
+  // Check if the created date is within the last 30 days
+  if (now.diff(createdDate, "days") <= 30) {
+    return "New";
+  }
+  return "";
+}

@@ -7,5 +7,6 @@ export const upsertUserPostApi = "/user";
 export const getUserInfoGetApi = "/user/info";
 export const getUserDetailsInfoGetApi = "/user/info/details";
 export const getUserPropertiesGetApi = "/user/properties";
+export const getTopOfferPropertyGetApi = "/property/top-offer";
 
 export const deleteMediaPostApi = "/media/delete-media";

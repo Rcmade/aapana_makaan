@@ -28,10 +28,10 @@ export type UserPropertyResponseT = { id: string; propertyFor: "Sell" | "Rent" |
 export type AddPropertyResponseT = { message: string; data: { id: string; }; };
 
 
-export type PropertyDetailsResponseT = { location: { lat: number; lng: number; }; images: string[]; id: string; phone: string; name: string; streetNumber: string | null; street: string | null; city: string | null; postalCode: string | null; country: string | null; completeAddress: string; primaryImage: string; detailedPropertyType: "Plot" | "Flat" | "House"; bhk: "1 BHK" | "2 BHK" | "3 BHK" | "3+ BHK" | null; propertyFor: "Sell" | "Rent" | null; length: number; width: number; createdAt: string; updatedAt: string; price: string; } | null;
+export type PropertyDetailsResponseT = { location: { lat: number; lng: number; }; images: string[]; id: string; phone: string; name: string; streetNumber: string | null; street: string | null; state: string | null; city: string | null; postalCode: string | null; country: string | null; completeAddress: string; primaryImage: string; detailedPropertyType: "Plot" | "Flat" | "House"; bhk: "1 BHK" | "2 BHK" | "3 BHK" | "3+ BHK" | null; propertyFor: "Sell" | "Rent" | null; length: number; width: number; createdAt: string; updatedAt: string; price: string; } | null;
 
 
-export type AddPropertyRequestT = { length: number; name: string; phone: string; completeAddress: string; primaryImage: string; detailedPropertyType: "Plot" | "Flat" | "House"; width: number; price: number; lat: number; lng: number; images: string[]; id?: string | undefined; streetNumber?: string | null | undefined; street?: string | null | undefined; city?: string | null | undefined; postalCode?: string | null | undefined; country?: string | null | undefined; bhk?: "1 BHK" | "2 BHK" | "3 BHK" | "3+ BHK" | null | undefined; propertyFor?: "Sell" | "Rent" | null | undefined; };
+export type AddPropertyRequestT = { length: number; name: string; phone: string; completeAddress: string; primaryImage: string; detailedPropertyType: "Plot" | "Flat" | "House"; width: number; price: number; lat: number; lng: number; images: string[]; id?: string | undefined; streetNumber?: string | null | undefined; street?: string | null | undefined; state?: string | null | undefined; city?: string | null | undefined; postalCode?: string | null | undefined; country?: string | null | undefined; bhk?: "1 BHK" | "2 BHK" | "3 BHK" | "3+ BHK" | null | undefined; propertyFor?: "Sell" | "Rent" | null | undefined; };
 
 
 export type PropertyTypeE = "Plot" | "Flat" | "House";
@@ -40,7 +40,10 @@ export type PropertyTypeE = "Plot" | "Flat" | "House";
 export type BhkTypeE = "1 BHK" | "2 BHK" | "3 BHK" | "3+ BHK" | null | undefined;
 
 
-export type SearchPropertyResponseT = { properties: { id: string; name: string; completeAddress: string; price: string; primaryImage: string; location: { x: number; y: number; }; }[]; pagination: { total: {}; limit: number; page: number; }; };
+export type SearchPropertyResponseT = { properties: { id: string; completeAddress: string; price: string; primaryImage: string; location: { x: number; y: number; }; verified: boolean; createdAt: string; propertyFor: "Sell" | "Rent" | null; sqFt: never; }[]; pagination: { total: number; limit: number; page: number; }; };
+
+
+export type TopOfferPropertyResponseT = { properties: { id: string; completeAddress: string; price: string; primaryImage: string; location: { x: number; y: number; }; verified: boolean; createdAt: string; propertyFor: "Sell" | "Rent" | null; sqFt: never; }[]; };
 
 
 export type SearchPropertyRequestParamsT = { limit?: number; page?: number; search?: string; priceFilter?: number; sortBy?: keyof typeof import("/home/developer/Music/preparing/aapana_makaan/backend/src/db/schema/properties").properties; category?: string; userId?: string; lat?: number; lng?: number; };

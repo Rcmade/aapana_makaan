@@ -4,11 +4,7 @@ import DefaultMaps from "@/components/maps/DefaultMaps";
 import BhkTypeTabs from "@/components/tabs/BhkTypeTabs";
 import SelectPropertyType from "@/components/tabs/SelectPropertyType";
 import { Button } from "@/components/ui/button";
-import {
-  FilePreview,
-  FileUploader,
-  isFileWithPreview,
-} from "@/components/ui/extension/file-uploader";
+import { FileUploader } from "@/components/ui/extension/file-uploader";
 import {
   Form,
   FormControl,
@@ -21,24 +17,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { currentFormStateSearchParams } from "@/constant";
 import { propertyFormContent } from "@/content/propertyFormContent";
-import {
-  extractAddressComponents,
-  separateFilesAndStrings,
-} from "@/lib/utils/formateData";
+import { extractAddressComponents } from "@/lib/utils/formateData";
 import { PropertyFormContentKey, PSchemaT } from "@/types";
 import { pSchema, pSchemaObj } from "@/zodSchema/propertySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Autocomplete, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { Autocomplete, Marker } from "@react-google-maps/api";
 import {
   ArrowRight,
   Circle,
   CircleArrowRightIcon,
   CircleCheckBig,
-  Trash,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { uploadToCloudinary } from "@/lib/utils/cloudinaryUtils";
 import {
@@ -56,6 +48,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import DeleteMediaButton from "@/components/buttons/DeleteMediaButton";
 import useMapLoader from "@/hooks/useMapLoader";
+import AutoCompletePlaceSearchInput from "../inputs/AutoCompletePlaceSearchInput";
 
 interface AddUpdatePropertyFormProps {
   initialValues?: PropertyDetailsResponseT;
@@ -79,6 +72,7 @@ const AddUpdatePropertyForm = ({
         lng: initialValues?.location.lng || 0,
         streetNumber: initialValues?.streetNumber || "",
         street: initialValues?.street || "",
+        state: initialValues?.state || "",
         city: initialValues?.city || "",
         postalCode: initialValues?.postalCode || "",
         country: initialValues?.country || "",
@@ -103,18 +97,11 @@ const AddUpdatePropertyForm = ({
       },
     },
   });
-  // const { clearData } = useFormPersist(propertyFormStorageKey, {
-  //   watch: form.watch,
-  //   setValue: form.setValue,
-  //   exclude: ["photos"],
-  // });
 
   const [markerPosition, setMarkerPosition] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
-
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const { isLoaded } = useMapLoader();
 
@@ -148,19 +135,8 @@ const AddUpdatePropertyForm = ({
   };
 
   const handleUpdateFormAddress = (data: PSchemaT["location"]) => {
+    console.log({ data });
     form.setValue("location", data);
-  };
-
-  const handlePlaceChanged = () => {
-    const place = autocompleteRef.current?.getPlace();
-    if (place?.geometry?.location) {
-      const location = place.geometry.location;
-      const latLng = { lat: location.lat(), lng: location.lng() };
-      setMarkerPosition(latLng);
-
-      const address = extractAddressComponents(place, latLng);
-      handleUpdateFormAddress(address);
-    }
   };
 
   const updateAddressFromLatLng = (position: { lat: number; lng: number }) => {
@@ -196,9 +172,6 @@ const AddUpdatePropertyForm = ({
     }
     return verified;
   };
-  // useEffect(() => {
-  //   setTimeout(() => validateAllFields(), 0);
-  // }, []);
 
   const onSubmit = async (values: PSchemaT) => {
     try {
@@ -321,28 +294,37 @@ const AddUpdatePropertyForm = ({
             <FormField
               control={form.control}
               name="location.completeAddress"
-              render={({ field }) => (
+              render={({ field: { onChange: _, ...rest } }) => (
                 <FormItem>
+                  <Button
+                    onClick={() => {
+                      console.log(rest);
+                    }}
+                  >
+                    Test
+                  </Button>
                   <FormLabel isRequiredField>Property Address</FormLabel>
-                  {isLoaded && (
-                    <Autocomplete
-                      onPlaceChanged={handlePlaceChanged}
-                      onLoad={(a) => {
-                        autocompleteRef.current = a;
-                      }}
-                    >
-                      <FormControl>
-                        <Input
-                          disabled={isLoading}
-                          onKeyDown={(e) =>
-                            e.key === "Enter" && e.preventDefault()
+                  <FormControl key={rest.value}>
+                    {isLoaded && (
+                      <AutoCompletePlaceSearchInput
+                        isApiNeedToLoad={false}
+                        {...rest}
+                        onChange={(data) => {
+                          form.setValue("location", data); // Update the form field with the selected location data
+                          const { lat, lng } = data;
+                          if (lat && lng) {
+                            const latLng = { lat, lng };
+                            setMarkerPosition(latLng); // Update marker position on the map
                           }
-                          {...field}
-                          placeholder="Find Property Location"
-                        />
-                      </FormControl>
-                    </Autocomplete>
-                  )}
+                        }}
+                        placeholder="Find Property Location"
+                        disabled={isLoading}
+                        onKeyDown={(e) =>
+                          e.key === "Enter" && e.preventDefault()
+                        }
+                      />
+                    )}
+                  </FormControl>
                   <FormMessage />
                   <FormDescription>
                     Enter the address of the property. We will use this
