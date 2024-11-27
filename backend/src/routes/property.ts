@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
-import { PropertiesSchemaT } from "@/types";
+import { type PropertiesSchemaT } from "@/types";
 import { propertiesSchema } from "@/zodSchema/propertiesSchema";
 import { verifyAuth } from "@/lib/utils/middlewareUtils";
 import { db } from "@/db/db";
@@ -8,6 +8,9 @@ import { properties } from "@/db/schema";
 import { media } from "@/db/schema/properties";
 import { getUserPropertyDetails } from "@/controllers/user/properties";
 import { handlePropertyFetch } from "@/controllers/property/searchProperty";
+import { formateInsertLocation } from "@/lib/utils/dbUtils";
+import { getTopOfferProperty } from "@/controllers/property/topOfferProperty";
+import { getPropertyDetails } from "@/controllers/property/propertyDetails";
 
 const property = new Hono()
   .post("/add-property", verifyAuth, async (c) => {
@@ -28,10 +31,14 @@ const property = new Hono()
         ...parseData.data,
         userId: userId,
         price: parseData.data.price?.toString(),
-        location: {
-          x: parseData.data.lng, // longitude
-          y: parseData.data.lat, // latitude
-        },
+        // location: {
+        //   x: parseData.data.lng, // longitude
+        //   y: parseData.data.lat, // latitude
+        // },
+        location: formateInsertLocation({
+          lng: parseData.data.lng,
+          lat: parseData.data.lat,
+        }),
       })
       .returning({ id: properties.id });
 
@@ -48,7 +55,6 @@ const property = new Hono()
   })
   .get("/search", async (c) => {
     const params = c.req.query();
-    console.log({ params });
     const product = await handlePropertyFetch(params);
     return c.json(product);
   })
@@ -62,6 +68,16 @@ const property = new Hono()
       return c.json(null);
     }
     const propertyDetails = await getUserPropertyDetails(propertyId, userId);
+    return c.json(propertyDetails);
+  })
+  .get("/top-offer", async (c) => {
+    const result = await getTopOfferProperty();
+    return c.json({ properties: result });
+  })
+  .get("/details/:propertyId", async (c) => {
+    const propertyId = c.req.param("propertyId") || "";
+
+    const propertyDetails = await getPropertyDetails(propertyId);
     return c.json(propertyDetails);
   });
 

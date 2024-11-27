@@ -50,4 +50,7 @@ export const bhkArr = ["1 BHK", "2 BHK", "3 BHK", "3+ BHK"] as const;
 export const propertyForArr = ["Sell", "Rent"] as const;
 export const mediaTypeArr = ["image", "video"] as const;
 
-export const propertySearchDistance = 50000; //50 Km
+// 50km= 50/111 (deg) , 1 deg = 111 km
+export const propertySearchDistance = 0.45045045; //50 Km
+
+export const scheduleTypeArr = ["In_Person", "Video_Chat"] as const;

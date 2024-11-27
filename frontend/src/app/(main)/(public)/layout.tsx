@@ -1,6 +1,6 @@
 import Container from "@/components/layouts/Container";
 import Navbar from "@/components/navbars/navbar/Navbar";
-import { Children } from "@/types";
+import {type Children } from "@/types";
 import React from "react";
 
 const layout = ({ children }: Children) => {
@@ -8,7 +8,7 @@ const layout = ({ children }: Children) => {
     <div>
       <Navbar />
       <Container asChild>
-        <main className="mx-auto max-w-[98rem] px-2">{children}</main>
+        <main className="mx-auto max-w-[98rem] px-1 sm:px-2">{children}</main>
       </Container>
     </div>
   );

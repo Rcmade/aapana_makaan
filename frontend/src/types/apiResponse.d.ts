@@ -46,6 +46,9 @@ export type SearchPropertyResponseT = { properties: { id: string; completeAddres
 export type TopOfferPropertyResponseT = { properties: { id: string; completeAddress: string; price: string; primaryImage: string; location: { x: number; y: number; }; verified: boolean; createdAt: string; propertyFor: "Sell" | "Rent" | null; sqFt: never; }[]; };
 
 
+export type GetPropertyResponseT = { images: ({ url: string; } | null)[]; user: { id: string; name: string; email: string; phone: string | null; image: string | null; } | null; length: number; id: string; name: string; phone: string; createdAt: string; updatedAt: string; location: { x: number; y: number; }; userId: string | null; streetNumber: string | null; street: string | null; state: string | null; city: string | null; postalCode: string | null; country: string | null; completeAddress: string; primaryImage: string; detailedPropertyType: "Plot" | "Flat" | "House"; bhk: "1 BHK" | "2 BHK" | "3 BHK" | "3+ BHK" | null; propertyFor: "Sell" | "Rent" | null; width: number; verified: boolean; price: string; contentSearch: string | null; };
+
+
 export type SearchPropertyRequestParamsT = { limit?: number; page?: number; search?: string; priceFilter?: number; sortBy?: keyof typeof import("/home/developer/Music/preparing/aapana_makaan/backend/src/db/schema/properties").properties; category?: string; userId?: string; lat?: number; lng?: number; };
 
 
@@ -53,5 +56,11 @@ export type DeleteMediaResponseT = { message: string; };
 
 
 export type DeleteMediaRequestT = { propertyId?: string | undefined; mediaUrlOrId: string; };
+
+
+export type ScheduleTourResponseT = { message: string; data: { date: string; id: string; name: string; email: string; phone: string; createdAt: string; type: "In_Person" | "Video_Chat"; time: string; }; } | { message: string; data: null; };
+
+
+export type ScheduleTourRequestT = { date: Date; name: string; email: string; phone: string; type: "In_Person" | "Video_Chat"; time: string; id?: string | undefined; createdAt?: Date | undefined; };
 
 

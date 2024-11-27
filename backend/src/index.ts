@@ -10,6 +10,8 @@ import user from "./routes/user";
 import property from "./routes/property";
 import media from "./routes/media";
 import testRoute from "./routes/testRoute";
+import { hc } from "hono/client";
+import scheduleTour from "./routes/scheduleTour";
 
 const app = new Hono();
 
@@ -41,7 +43,8 @@ export const routes = app
   .route("/api/property", property)
   .route("/api/media", media)
   .route("/api/user", user)
-  .route("/api/uploads", uploads);
+  .route("/api/uploads", uploads)
+  .route("/api/schedule-tour", scheduleTour);
 
 export type AppType = typeof routes;
 
@@ -51,6 +54,15 @@ function getAuthConfig(c: Context): AuthConfig {
     providers: [],
   };
 }
+
+// const client = hc<AppType>("http://localhost:4000");
+
+// const a = client.api.property["top-offer"]["$url"];
+
+// console.dir(a().toString(), {
+//   depth: Infinity,
+//   colors: true,
+// });
 
 serve({
   fetch: routes.fetch,

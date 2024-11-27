@@ -1,4 +1,4 @@
-import { SearchParamsPromise } from "@/types";
+import { type SearchParamsPromise } from "@/types";
 import { cookies } from "next/headers";
 import React from "react";
 

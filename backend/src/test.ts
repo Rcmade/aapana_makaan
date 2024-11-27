@@ -114,6 +114,61 @@ const data = [
     width: 20,
     price: "100000.00",
   },
+
+  {
+    createdAt: new Date("2024-11-07T08:49:17.768Z"),
+    id: "X44wk9N2",
+    updatedAt: new Date("2024-11-07T08:49:17.768Z"),
+    location: {
+      x: 75.948545,
+      y: 22.644879999999,
+    },
+    userId: "mj8ofwOTSJY",
+    phone: "+2345678",
+    name: "RAHUL",
+    streetNumber: "",
+    street: "Cambridge the International School",
+    city: "",
+    postalCode: "452020",
+    country: "India",
+    completeAddress:
+      "JWVX+WCV, Cambridge the Int'l School Rd, Madhya Pradesh 452020, India",
+    primaryImage:
+      "https://res.cloudinary.com/dg3fkrz9h/image/upload/v1730969356/AapnaMakaan/cf6150b34e9a6c25ab289e1a6cacab8501d6d445136627dddec816e7d083fcaf_lqnztj.jpg",
+    detailedPropertyType: "House",
+    bhk: "3 BHK",
+    propertyFor: "Rent",
+    length: 10,
+    width: 20,
+    price: "100000.00",
+  },
+  {
+    createdAt: new Date("2024-11-07T08:49:17.768Z"),
+    id: "wk9N2",
+    updatedAt: new Date("2024-11-07T08:49:17.768Z"),
+    location: {
+      x: 75.948545,
+      y: 22.644879999999,
+    },
+    userId: "mj8ofwOTSJY",
+    phone: "+234567988",
+    name: "ray",
+    streetNumber: "",
+    street: "Cambridge the International School",
+    city: "",
+    postalCode: "452020",
+    country: "India",
+    completeAddress:
+      "JWVX+WCV, Cambridge the Int'l School Rd, Madhya Pradesh 452020, India",
+    primaryImage:
+      "https://res.cloudinary.com/dg3fkrz9h/image/upload/v1730969356/AapnaMakaan/cf6150b34e9a6c25ab289e1a6cacab8501d6d445136627dddec816e7d083fcaf_lqnztj.jpg",
+    detailedPropertyType: "House",
+    bhk: "3 BHK",
+    propertyFor: "Rent",
+    length: 10,
+    width: 20,
+    price: "100000.00",
+  },
 ] as const;
 
 // const data = {
@@ -177,33 +232,30 @@ const d = async () => {
   // user.forEach(async (u) => {
   //   await db.insert(users).values(u);
   // });
-  // data.forEach(async (d) => {
-  //   await db.insert(properties).values(d);
-  // });
+  data.forEach(async (d) => {
+    await db.insert(properties).values(d).onConflictDoNothing();
+  });
   // const a = await db.select().from(users).execute();
   // console.dir(a, {
   //   depth: true,
   //   colors: true,
   // });
-  // await db.insert(properties).values(data[2]);
-  const searchTerm = "new gauri nagar indore, india";
-
-  // Remove commas, periods, and other non-alphanumeric characters (except spaces, hyphens, and apostrophes)
-  const sanitizedSearchTerm = searchTerm.replace(/[^a-zA-Z0-9\s'-]/g, "");
-  console.log({ sanitizedSearchTerm }); // This will output "new gauri nagar indore india"
-
-  // Convert the sanitized search term into a valid tsquery format by replacing spaces with "|"
-  const formattedSearchTerm = sanitizedSearchTerm.replaceAll(" ", " | ");
-  // Now you can use it in the query
-  const results = await db
-    .select()
-    .from(properties)
-    .where(
-      sql`to_tsvector('english', ${properties.completeAddress} || ' ' || ${properties.name}) @@ to_tsquery('english', ${formattedSearchTerm})`
-    )
-    .execute();
-
-  console.log(results);
+  // // await db.insert(properties).values(data[2]);
+  // const searchTerm = "new gauri nagar indore, india";
+  // // Remove commas, periods, and other non-alphanumeric characters (except spaces, hyphens, and apostrophes)
+  // const sanitizedSearchTerm = searchTerm.replace(/[^a-zA-Z0-9\s'-]/g, "");
+  // console.log({ sanitizedSearchTerm }); // This will output "new gauri nagar indore india"
+  // // Convert the sanitized search term into a valid tsquery format by replacing spaces with "|"
+  // const formattedSearchTerm = sanitizedSearchTerm.replaceAll(" ", " | ");
+  // // Now you can use it in the query
+  // const results = await db
+  //   .select()
+  //   .from(properties)
+  //   .where(
+  //     sql`to_tsvector('english', ${properties.completeAddress} || ' ' || ${properties.name}) @@ to_tsquery('english', ${formattedSearchTerm})`
+  //   )
+  //   .execute();
+  // console.log(results);
 };
 
 d();

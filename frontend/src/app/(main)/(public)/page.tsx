@@ -5,7 +5,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="space-y-6 py-8">
+    <div className="space-y-6 pb-8">
       <HeroSection />
       <ActionSection />
       <TopOfferSection />

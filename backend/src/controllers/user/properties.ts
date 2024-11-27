@@ -33,6 +33,7 @@ export const getUserPropertyDetails = async (
       name: properties.name,
       streetNumber: properties.streetNumber,
       street: properties.street,
+      state: properties.state,
       city: properties.city,
       postalCode: properties.postalCode,
       country: properties.country,
@@ -63,29 +64,4 @@ export const getUserPropertyDetails = async (
   };
 };
 
-/* 
-{
-    "createdAt": "2024-11-07T11:41:11.711Z",
-    "id": "xWa6kbdt01w",
-    "updatedAt": "2024-11-07T11:41:11.711Z",
-    "location": {
-      "x": 75.8635506,
-      "y": 22.7566151
-    },
-    "userId": "mj8ofwOTSJY",
-    "phone": "+917471115587",
-    "name": "RAHUL Chourasiya",
-    "streetNumber": "",
-    "street": "Shiv Mandir Wali Gali",
-    "city": "Indore",
-    "postalCode": "452003",
-    "country": "India",
-    "completeAddress": "Shiv Mandir Wali Gali, New Gouri Nagar, Sukhliya, Indore, Madhya Pradesh 452003, India",
-    "primaryImage": "https://res.cloudinary.com/dg3fkrz9h/image/upload/v1730959871/AapnaMakaan/cf6150b34e9a6c25ab289e1a6cacab8501d6d445136627dddec816e7d083fcaf_inouji.jpg",
-    "detailedPropertyType": "House",
-    "bhk": "3 BHK",
-    "length": 40,
-    "width": 40,
-    "price": "100000.00"
-  },
-*/
+

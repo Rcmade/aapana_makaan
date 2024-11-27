@@ -1,4 +1,4 @@
-import { PropertyFetchParams } from "./types/index.d";
+import { PropertyFetchParams, ScheduleSchemaT } from "./types/index.d";
 import { AppType } from ".";
 import { hc, InferResponseType, InferRequestType } from "hono/client";
 import {
@@ -68,6 +68,14 @@ export type SearchPropertyResponseT = InferResponseType<
   typeof client.api.property.search.$get
 >;
 
+export type TopOfferPropertyResponseT = InferResponseType<
+  (typeof client.api.property)["top-offer"]["$get"]
+>;
+
+export type GetPropertyResponseT = InferResponseType<
+  (typeof client.api.property)["details"][":propertyId"]["$get"]
+>;
+
 export type SearchPropertyRequestParamsT = PropertyFetchParams;
 
 // Media
@@ -75,3 +83,10 @@ export type DeleteMediaResponseT = InferResponseType<
   (typeof client.api.media)["delete-media"]["$post"]
 >;
 export type DeleteMediaRequestT = Omit<DeleteMediaRequest, "userId">;
+
+// ScheduleTour
+export type ScheduleTourResponseT = InferResponseType<
+  (typeof client.api)["schedule-tour"]["create-update-tour"]["$post"]
+>;
+
+export type ScheduleTourRequestT = ScheduleSchemaT

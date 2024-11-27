@@ -1,15 +1,16 @@
 import "server-only";
 import {
-  getPropertyDetailsGetApi,
+  getUserPropertyDetailsGetAp,
   getTopOfferPropertyGetApi,
   getUserPropertiesGetApi,
+  getPropertyDetailsGetApi,
 } from "@/constant/apiRoutes";
 import { fetcher } from "@/lib/utils/apiUtils";
 import { getBackendUrl } from "@/lib/utils/stringUtils";
 import {
+  GetPropertyResponseT,
   PropertyDetailsResponseT,
   TopOfferPropertyResponseT,
-  // TopOfferPropertyResponseT,
   UserPropertyResponseT,
 } from "@/types/apiResponse";
 import { headers } from "next/headers";
@@ -41,12 +42,12 @@ export const getUserPropertyDetails = async (
   try {
     const header = await headers();
     const data: PropertyDetailsResponseT = await fetcher(
-      `${getBackendUrl(getPropertyDetailsGetApi)}/${propertyId}`,
+      `${getBackendUrl(getUserPropertyDetailsGetAp)}/${propertyId}`,
       {
         headers: header,
         next: {
           revalidate: 0,
-          tags: [getPropertyDetailsGetApi],
+          tags: [getUserPropertyDetailsGetAp],
         },
       },
     );
@@ -74,5 +75,21 @@ export const getTopOfferProperties = async () => {
     return {
       properties: [],
     };
+  }
+};
+
+export const getPropertyById = async (propertyId: string) => {
+  try {
+    const url = `${getBackendUrl(getPropertyDetailsGetApi)}/${propertyId}`;
+    const data: GetPropertyResponseT = await fetcher(url, {
+      next: {
+        revalidate: 60 * 60 * 24,
+        tags: [getPropertyDetailsGetApi],
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error fetching user properties", error);
+    return null;
   }
 };

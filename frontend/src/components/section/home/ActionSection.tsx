@@ -8,14 +8,14 @@ const ActionSection = () => {
         {actionSectionContent.map((img) => (
           <div
             key={img.img}
-            className="relative max-h-fit min-w-full max-w-full snap-start overflow-hidden md:min-w-[300px]"
+            className="relative max-h-fit min-w-full max-w-full snap-center overflow-hidden md:min-w-[300px]"
           >
             <Image
               src={img.img}
               alt={img.label}
               width={416}
               height={460}
-              className="max-h-full max-w-full object-contain"
+              className="mx-auto max-h-full max-w-full object-contain"
             />
           </div>
         ))}

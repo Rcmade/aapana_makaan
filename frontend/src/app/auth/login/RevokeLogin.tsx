@@ -10,9 +10,11 @@ const RevokeLogin = ({
   callbackUrl: string;
   searchParamsStr: string;
 }) => {
+  const callback = `${callbackUrl || ""}${searchParamsStr || ""}`;  
+  console.log({ callback });
   useEffect(() => {
     signIn("google", {
-      callbackUrl: `${callbackUrl || ""}${searchParamsStr || ""}`,
+      callbackUrl: callback,
     });
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -18,10 +18,10 @@ import { Input } from "@/components/ui/input";
 import { currentFormStateSearchParams } from "@/constant";
 import { propertyFormContent } from "@/content/propertyFormContent";
 import { extractAddressComponents } from "@/lib/utils/formateData";
-import { PropertyFormContentKey, PSchemaT } from "@/types";
+import { type PropertyFormContentKey, type PSchemaT } from "@/types";
 import { pSchema, pSchemaObj } from "@/zodSchema/propertySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Autocomplete, Marker } from "@react-google-maps/api";
+import { Marker } from "@react-google-maps/api";
 import {
   ArrowRight,
   Circle,
@@ -135,7 +135,6 @@ const AddUpdatePropertyForm = ({
   };
 
   const handleUpdateFormAddress = (data: PSchemaT["location"]) => {
-    console.log({ data });
     form.setValue("location", data);
   };
 
@@ -296,13 +295,7 @@ const AddUpdatePropertyForm = ({
               name="location.completeAddress"
               render={({ field: { onChange: _, ...rest } }) => (
                 <FormItem>
-                  <Button
-                    onClick={() => {
-                      console.log(rest);
-                    }}
-                  >
-                    Test
-                  </Button>
+                 
                   <FormLabel isRequiredField>Property Address</FormLabel>
                   <FormControl key={rest.value}>
                     {isLoaded && (

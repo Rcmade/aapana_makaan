@@ -1,4 +1,4 @@
-import { orderItems, properties } from "@/db/schema";
+import { orderItems, properties, scheduleSchema } from "@/db/schema";
 import { addressSchema } from "@/zodSchema";
 import { cartInput } from "@/zodSchema/cartSchema";
 import {
@@ -32,6 +32,8 @@ export type UpsertUserT = z.infer<typeof upsertUserSchema>;
 export type PropertyTypeE = PropertiesSchemaT["detailedPropertyType"];
 export type BhkTypeE = PropertiesSchemaT["bhk"];
 export type UserRole = z.infer<typeof userSchema>["role"];
+export type ScheduleSchemaT = typeof scheduleSchema.$inferInsert;
+
 export type TempOrderRequestT = {
   shippingId: string;
   clientSecret: string;

@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, FC } from "react";
 import { Input } from "@/components/ui/input";
 import { extractAddressComponents } from "@/lib/utils/formateData";
-import { PropertyFormSchemaT } from "@/types";
+import {type PropertyFormSchemaT } from "@/types";
 import useMapLoader from "@/hooks/useMapLoader";
 
 // Type for the Address object

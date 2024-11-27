@@ -211,6 +211,55 @@
       "when": 1731930671270,
       "tag": "0029_mixed_blue_marvel",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1732086162960,
+      "tag": "0030_great_skullbuster",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1732086262566,
+      "tag": "0031_simple_shinobi_shaw",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1732089886637,
+      "tag": "0032_lame_anita_blake",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1732092360305,
+      "tag": "0033_overconfident_celestials",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1732093177211,
+      "tag": "0034_bright_daredevil",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1732698692098,
+      "tag": "0035_melted_supreme_intelligence",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1732699434600,
+      "tag": "0036_ambitious_invisible_woman",
+      "breakpoints": true
     }
   ]
 }

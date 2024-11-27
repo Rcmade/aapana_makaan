@@ -10,6 +10,7 @@ export const propertiesSchema = z.object({
   }),
 
   streetNumber: z.string().nullable().optional(),
+  state: z.string().nullable().optional(),
   street: z.string().nullable().optional(),
   city: z.string().nullable().optional(),
   postalCode: z.string().nullable().optional(),

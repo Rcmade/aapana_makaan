@@ -5,6 +5,7 @@ import { z } from "zod";
 import { type ClientUploadedFileData } from "uploadthing/types";
 import { propertyFormContent } from "@/content/propertyFormContent";
 import { searchPropertiesSchema } from "@/zodSchema/searchSchema";
+import { scheduleSchema } from "@/zodSchema/scheduleSchema";
 
 export type AlertVarientT = VariantProps<typeof alertVariants>["variant"];
 
@@ -63,6 +64,8 @@ export type UploadedFile<T = unknown> = ClientUploadedFileData<T>;
 export type PropertyFormContentKey = keyof typeof propertyFormContent;
 
 export type PSchemaT = z.infer<typeof pSchema>;
+
+export type ScheduleSchemaT = z.infer<typeof scheduleSchema>;
 
 export type SearchPropertiesSchemaT = z.infer<typeof searchPropertiesSchema>;
 

@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
 import { media, properties } from "@/db/schema";
 import cloudinaryService from "@/services/uploadService";
-import { DeleteMediaRequestT } from "@/types";
+import {type DeleteMediaRequestT } from "@/types";
 import { and, eq, or } from "drizzle-orm";
 
 export const deleteMedia = async ({

@@ -137,7 +137,6 @@ export function FileUploader(props: FileUploaderProps) {
         return;
       }
 
-      console.log({ acceptedFiles });
       const newFiles = acceptedFiles.map(
         (file) => ({
           preview: URL.createObjectURL(file),
@@ -148,7 +147,6 @@ export function FileUploader(props: FileUploaderProps) {
       );
 
       const updatedFiles = files ? [...files, ...newFiles] : newFiles;
-      console.log({ updatedFiles });
       setFiles(updatedFiles);
       onValueChange?.(updatedFiles);
 

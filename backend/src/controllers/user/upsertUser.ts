@@ -1,6 +1,6 @@
 import { db } from "@/db/db";
 import { users } from "@/db/schema";
-import { UpsertUserT } from "@/types";
+import {type UpsertUserT } from "@/types";
 import { eq } from "drizzle-orm";
 
 export const upsertUser = async (user: UpsertUserT) => {

@@ -1,6 +1,6 @@
 import LoginButton from "@/components/buttons/LoginButton";
 import { createQueryString } from "@/lib/utils/stringUtils";
-import { PageProps, SearchParamsPromise } from "@/types";
+import { type SearchParamsPromise } from "@/types";
 import React from "react";
 import RevokeLogin from "./RevokeLogin";
 

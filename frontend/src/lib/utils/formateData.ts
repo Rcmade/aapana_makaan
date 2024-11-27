@@ -1,4 +1,4 @@
-import { PropertyFormSchemaT } from "@/types";
+import {type PropertyFormSchemaT } from "@/types";
 
 export const extractAddressComponents = (
   place: google.maps.places.PlaceResult,
@@ -125,4 +125,20 @@ export function formatBytes(
       ? (accurateSizes[i] ?? "Bytest")
       : (sizes[i] ?? "Bytes")
   }`;
+}
+
+export function formatPrice(price: number) {
+  if (price >= 1e7) {
+    // Convert to crore
+    return `${(price / 1e7).toFixed(2)} cr`;
+  } else if (price >= 1e5) {
+    // Convert to lakh
+    return `${(price / 1e5).toFixed(2)} lakh`;
+  } else if (price >= 1e3) {
+    // Convert to thousand
+    return `${(price / 1e3).toFixed(2)} k`;
+  } else {
+    // No conversion, just return the original price
+    return `${price} rupees`;
+  }
 }

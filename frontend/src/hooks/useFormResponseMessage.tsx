@@ -1,4 +1,4 @@
-import { AlertVarientT } from "@/types";
+import {type AlertVarientT } from "@/types";
 import { create } from "zustand";
 
 interface ResponseMessageState {

@@ -476,7 +476,6 @@ const PropertySearchInput = () => {
 
   const handlePlaceChanged = async () => {
     const place = autocompleteRef.current?.getPlace();
-    console.log({ place });
     if (place?.geometry?.location) {
       const location = place.geometry.location;
       const latLng = { lat: location.lat(), lng: location.lng() };
@@ -571,3 +570,355 @@ const PropertySearchInput = () => {
 };
 
 export default PropertySearchInput;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+
+import { useState, useCallback } from "react";
+import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import useMapLoader from "@/hooks/useMapLoader";
+import DefaultMaps from "@/components/maps/DefaultMaps";
+
+const containerStyle = {
+  width: "100%",
+  height: "600px",
+};
+
+const center = {
+  lat: 22.719568,
+  lng: 75.857727,
+};
+
+const properties = [
+  {
+    id: 1,
+    price: "$1,620",
+    lat: 22.719568,
+    lng: 75.857727,
+    address: "40 Sample St, Brooklyn, NY 11249",
+    image: "/placeholder.svg?height=100&width=150",
+  },
+  {
+    id: 2,
+    price: "$1.4K",
+    lat: 22.7568,
+    lng: 75.857727,
+    address: "41 Sample St, Brooklyn, NY 11249",
+    image: "/placeholder.svg?height=100&width=150",
+  },
+  // Add more properties as needed
+];
+
+export default function MapComponent() {
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const { isLoaded } = useMapLoader();
+
+  const [map, setMap] = useState(null);
+
+  const onLoad = useCallback((map) => {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    properties.forEach(({ lat, lng }) => bounds.extend({ lat, lng }));
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(() => {
+    setMap(null);
+  }, []);
+
+  if (!isLoaded) return <div>Loading...</div>;
+
+  return (
+    <>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={14}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        // mapTypeId="ROADMAP"
+      >
+        {properties.map((property) => (
+          <Marker
+            key={property.id}
+            position={{ lat: property.lat, lng: property.lng }}
+            onClick={() => setSelectedProperty(property)}
+            icon={{
+              path: "M-1.547 12l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+              fillColor: "#FF0000",
+              fillOpacity: 1,
+              strokeWeight: 0,
+              rotation: 0,
+              scale: 2,
+              anchor: new window.google.maps.Point(15, 30),
+              labelOrigin: new window.google.maps.Point(15, -10),
+            }}
+            label={{
+              text: property.price,
+              color: "white",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          />
+        ))}
+
+        {selectedProperty && (
+          <InfoWindow
+            position={{ lat: selectedProperty.lat, lng: selectedProperty.lng }}
+            onCloseClick={() => setSelectedProperty(null)}
+          >
+            <Card className="w-64">
+              <CardHeader>
+                <img
+                  src={selectedProperty.image}
+                  alt="Property"
+                  className="h-32 w-full object-cover"
+                />
+                <CardTitle>{selectedProperty.price}</CardTitle>
+                <CardDescription>{selectedProperty.address}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>45 sqm</p>
+                <p>2 Beds, 1 Bath</p>
+              </CardContent>
+            </Card>
+          </InfoWindow>
+        )}
+      </GoogleMap>
+    </>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+
+import useMapLoader from "@/hooks/useMapLoader";
+import { SearchPropertyResponseT } from "@/types/apiResponse";
+import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
+import React, { useCallback, useMemo, useState } from "react";
+import PropertyCard from "../card/PropertyCard";
+import { svgMarker } from "@/constant";
+import { formatPrice } from "@/lib/utils/formateData";
+
+const center = {
+  lat: 22.719568,
+  lng: 75.857727,
+};
+
+const containerStyle = {
+  width: "100%",
+  height: "50rem",
+};
+
+interface SearchPropertyMapProps extends SearchPropertyResponseT {
+  // properties: SearchPropertyResponseT["properties"];
+}
+
+const SearchPropertyMap = ({
+  properties,
+  pagination,
+}: SearchPropertyMapProps) => {
+  const [selectedProperty, setSelectedProperty] = useState<
+    SearchPropertyResponseT["properties"][number] | null
+  >(null);
+
+  const { isLoaded } = useMapLoader();
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+
+  // Map load handler
+  const onLoad = useCallback(
+    (map: google.maps.Map) => {
+      const bounds = new window.google.maps.LatLngBounds();
+      properties.forEach(({ location }) => {
+        const lat = location.y;
+        const lng = location.x;
+        bounds.extend({ lat, lng });
+      });
+      map.fitBounds(bounds);
+
+      const listener = google.maps.event.addListener(map, "idle", () => {
+        if ((map?.getZoom?.() ?? 0) > 15) {
+          map.setZoom(15); // Set a maximum zoom level
+        }
+        google.maps.event.removeListener(listener); // Remove the listener to prevent it from firing repeatedly
+      });
+
+      setMap(map);
+    },
+    [properties],
+  );
+
+  // Map unload handler
+  const onUnmount = useCallback(() => {
+    setMap(null);
+  }, []);
+
+  return (
+    <>
+      {isLoaded && (
+        <GoogleMap
+          // key={JSON.stringify(pagination)}
+          center={center}
+          zoom={12}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          options={{
+            zoomControl: true,
+            scrollwheel: true,
+            mapTypeId: "roadmap",
+          }}
+        >
+          <div key={JSON.stringify(pagination)}>
+            {properties.map((property) => (
+              <Marker
+                key={property.id}
+                position={{
+                  lat: property.location.y,
+                  lng: property.location.x,
+                }}
+                onClick={() => setSelectedProperty(property)}
+                icon={{
+                  url: "https://res.cloudinary.com/dg3fkrz9h/image/upload/f_auto,q_auto/ppyoancft6glh7tb3krg",
+                  fillOpacity: 1,
+                  scaledSize: new window.google.maps.Size(37, 37),
+                  anchor: new window.google.maps.Point(18.5, 37),
+                  labelOrigin: new window.google.maps.Point(18.5, 48), // Position label below marker
+                }}
+                label={{
+                  text: `₹${formatPrice(+property.price)}`,
+                  className:
+                    "font-weight bg-primary-foreground p-2  mt-4 shadow-md rounded-md text-primary",
+                }}
+              />
+            ))}
+          </div>
+          {selectedProperty && (
+            <InfoWindow
+              position={{
+                lat: selectedProperty.location.y,
+                lng: selectedProperty.location.x,
+              }}
+              onCloseClick={() => setSelectedProperty(null)}
+              options={{
+                pixelOffset: new window.google.maps.Size(0, -27),
+              }}
+            >
+              <PropertyCard
+                className="max-w-80 border-none"
+                property={selectedProperty}
+              />
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      )}
+    </>
+  );
+};
+
+export default SearchPropertyMap;

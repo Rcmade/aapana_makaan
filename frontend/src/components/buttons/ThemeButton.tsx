@@ -18,28 +18,12 @@ export function ModeToggle() {
   return (
     <Button
       onClick={() => setTheme(() => (theme === "dark" ? "light" : "dark"))}
-      variant="outline"
+      variant="ghost"
       className={"text-primary"}
       size="icon"
     >
       {theme === "dark" ? <Moon className="" /> : <Sun className="" />}
       <span className="sr-only">Toggle theme</span>
     </Button>
-    // <DropdownMenu>
-    //   <DropdownMenuTrigger asChild>
-
-    //   </DropdownMenuTrigger>
-    //   <DropdownMenuContent align="end">
-    //     <DropdownMenuItem onClick={() => setTheme("light")}>
-    //       Light
-    //     </DropdownMenuItem>
-    //     <DropdownMenuItem onClick={() => setTheme("dark")}>
-    //       Dark
-    //     </DropdownMenuItem>
-    //     <DropdownMenuItem onClick={() => setTheme("system")}>
-    //       System
-    //     </DropdownMenuItem>
-    //   </DropdownMenuContent>
-    // </DropdownMenu>
   );
 }

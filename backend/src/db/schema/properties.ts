@@ -8,6 +8,7 @@ import {
   geometry,
   index,
   customType,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { commonCreatedField } from "./commonSchemaFields";
 import {
@@ -92,6 +93,7 @@ export const properties = pgTable(
     // Address fields
     streetNumber: varchar("street_number", { length: 100 }),
     street: varchar("street", { length: 100 }),
+    state: varchar("state", { length: 100 }),
     city: varchar("city", { length: 100 }),
     postalCode: varchar("postal_code", { length: 20 }),
     country: varchar("country", { length: 100 }),
@@ -104,7 +106,7 @@ export const properties = pgTable(
     // Size fields
     length: integer("length").notNull(),
     width: integer("width").notNull(),
-
+    verified: boolean("verified").notNull().default(false),
     // Pricing
     price: decimal("price", { precision: 12, scale: 2 }).notNull(),
     contentSearch: tsVector("content_search").generatedAlwaysAs(

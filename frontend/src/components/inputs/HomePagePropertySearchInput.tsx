@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import { ChevronDown, SearchIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import useMapLoader from "@/hooks/useMapLoader";
 import {
-  createQueryString,
   searchParamsToObject,
 } from "@/lib/utils/stringUtils";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -24,42 +22,39 @@ import {
   SelectValue,
 } from "../ui/select";
 import { detailedPropertyType } from "@/zodSchema/propertySchema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { searchPropertiesSchema } from "@/zodSchema/searchSchema";
-import { SearchPropertiesSchemaT } from "@/types";
 import { Form } from "../ui/form";
 import AutoCompletePlaceSearchInput from "./AutoCompletePlaceSearchInput";
 import { handlePopoverOpenChange } from "@/lib/utils";
+import { usePropertySearchForm } from "@/hooks/usePropertySearchForm";
 
-const PropertySearchInput = () => {
+const HomePagePropertySearchInput = () => {
   const [open, setOpen] = React.useState(false);
   const searchParams = useSearchParams();
-  const searchParamsObj: SearchPropertyRequestParamsT = searchParamsToObject(
-    searchParams.toString(),
-  );
+  // const searchParamsObj: SearchPropertyRequestParamsT = searchParamsToObject(
+  //   searchParams.toString(),
+  // );
 
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const { isLoaded } = useMapLoader();
-  const { push } = useRouter();
+  const { form, onSubmit } = usePropertySearchForm();
 
-  const form = useForm<SearchPropertiesSchemaT>({
-    resolver: zodResolver(searchPropertiesSchema),
-    defaultValues: {
-      detailedPropertyType: searchParamsObj.category || "",
-      lat: searchParamsObj.lat || 0,
-      lng: searchParamsObj.lng || 0,
-      search: searchParamsObj.search || "",
-    },
-  });
+  // const { push } = useRouter();
 
-  const onSubmit = async (data: SearchPropertiesSchemaT) => {
-    const str = createQueryString({
-      ...data,
-      category: data?.detailedPropertyType,
-    });
-    push(`/search${str}`);
-  };
+  // const form = useForm<SearchPropertiesSchemaT>({
+  //   resolver: zodResolver(searchPropertiesSchema),
+  //   defaultValues: {
+  //     detailedPropertyType: searchParamsObj.category || "",
+  //     lat: searchParamsObj.lat || 0,
+  //     lng: searchParamsObj.lng || 0,
+  //     search: searchParamsObj.search || "",
+  //   },
+  // });
+
+  // const onSubmit = async (data: SearchPropertiesSchemaT) => {
+  //   const str = createQueryString({
+  //     ...data,
+  //     category: data?.detailedPropertyType,
+  //   });
+  //   push(`/search${str}`);
+  // };
 
   const searchInput = form.watch("search");
 
@@ -81,7 +76,7 @@ const PropertySearchInput = () => {
               <Button
                 variant="outline"
                 role="combobox"
-                className="w-full flex-1 justify-between border-0 px-4 hover:bg-accent md:w-[180px]"
+                className="w-full flex-1 justify-between border-0 bg-transparent px-3 hover:bg-accent md:w-[180px] md:px-4"
                 key={form.getValues("search")}
               >
                 <span>
@@ -89,7 +84,7 @@ const PropertySearchInput = () => {
                     ? `${form.getValues("search")?.substring(0, 20)}...`
                     : "Location"}
                 </span>
-                <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
 
@@ -98,7 +93,7 @@ const PropertySearchInput = () => {
                 e;
               }}
               align="start"
-              className="mx-auto -ml-4 mt-4 w-[26rem] max-w-full p-0 px-2"
+              className="mx-auto -ml-4 mt-4 w-[26rem] max-w-full p-0 px-2 md:px-0"
             >
               <AutoCompletePlaceSearchInput
                 isApiNeedToLoad
@@ -141,4 +136,4 @@ const PropertySearchInput = () => {
   );
 };
 
-export default PropertySearchInput;
+export default HomePagePropertySearchInput;

@@ -1,4 +1,3 @@
-// import { PropertyFormContentKey } from "@/types";
 import { z } from "zod";
 
 export const propertyType = ["Residential", "Commercial"] as const;

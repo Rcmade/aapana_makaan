@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 interface LoginButtonProps {}
 const LoginButton = ({}: LoginButtonProps) => {
   return (
-    <Button onClick={() => signIn("google")} size="lg">
+    <Button variant="ghost" onClick={() => signIn("google")} size="sm">
       Sign In
     </Button>
   );

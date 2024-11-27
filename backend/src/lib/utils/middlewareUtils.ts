@@ -1,7 +1,7 @@
 import { Context } from "hono";
 import { type Next } from "hono";
 import { getAuthUser } from "./authUtils";
-import { UserRole } from "@/types";
+import {type UserRole } from "@/types";
 import { db } from "@/db/db";
 import { users } from "@/db/schema";
 import { and, eq } from "drizzle-orm";

@@ -1,4 +1,4 @@
-import { PageProps } from "@/types";
+import {type PageProps } from "@/types";
 import axios from "axios";
 
 export const createQueryString = (
@@ -50,8 +50,8 @@ export function isValidObjectId(id: string) {
   return objectIdRegex.test(id);
 }
 
-export const getBackendUrl = (apiRoute: string) => {
-  return `${process.env.NEXT_PUBLIC_API_URL}${apiRoute?.startsWith("/") ? apiRoute : `/${apiRoute}`}`;
+export const getBackendUrl = (route: string) => {
+  return `${process.env.NEXT_PUBLIC_API_URL}${route?.startsWith("/") ? route : `/${route}`}`;
 };
 
 export const getFrontedApiUrl = (route: string) => {
@@ -109,15 +109,25 @@ export const getCallbackUrl = (route: string) => {
   return `/${callbackUrl}?${searchParams.toString()}`;
 };
 
-// export const getUpdatedUrl = (overrideRoute: string) => {};
+/**
+ * Generates a Google Maps URL for a given location.
+ *
+ * @param location - An object containing latitude (y) and longitude (x).
+ * @returns The full URL string for the Google Maps location.
+ */
+export function getGoogleMapsUrl(location: {
+  x: number; // Longitude
+  y: number; // Latitude
+}): string {
+  const { x: longitude, y: latitude } = location;
 
-// console.log(
-//   createQueryString(
-//     searchParamsToObject(
-//       "?search=this is amazing&lat=2345.234320&lng=243.24320",
-//       {
-//         search: "it is not",
-//       },
-//     ),
-//   ),
-// );
+  // if (!latitude || !longitude) {
+  //   throw new Error(
+  //     "Invalid location data: Latitude and Longitude are required.",
+  //   );
+  // }
+
+  return `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+}
+
+
