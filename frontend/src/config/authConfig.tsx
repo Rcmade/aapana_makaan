@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import authProvidersConfig from "@/config/authProvidersConfig";
 import axios from "axios";
-import { UpsertUserRequestT, UpsertUserResponseT } from "@/types/apiResponse";
+import {type UpsertUserRequestT,type UpsertUserResponseT } from "@/types/apiResponse";
 import { getBackendUrl } from "@/lib/utils/stringUtils";
 import { upsertUserPostApi } from "@/constant/apiRoutes";
 import {  headers } from "next/headers";

@@ -1,6 +1,6 @@
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { BhkTypeE } from "@/types/apiResponse";
+import { type BhkTypeE } from "@/types/apiResponse";
 
 interface BhkTypeTabsProps {
   onChange: (value: BhkTypeE) => void;

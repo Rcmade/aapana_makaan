@@ -18,4 +18,15 @@ export const scheduleSchema = z.object({
   phone: z
     .string()
     .min(10, { message: "Phone number must be at least 10 characters" }),
+  propertyId: z.string(),
+});
+
+export const propertyInquirySchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z
+    .string()
+    .min(10, { message: "Phone number must be at least 10 characters" }),
+  message: z.string().min(1, "Message is required"),
+  propertyId: z.string(),
 });

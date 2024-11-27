@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { TopOfferPropertyResponseT } from "@/types/apiResponse";
+import { type TopOfferPropertyResponseT } from "@/types/apiResponse";
 import PropertyCard from "@/components/card/PropertyCard";
 
 interface TopOfferCarouselProps extends TopOfferPropertyResponseT {}

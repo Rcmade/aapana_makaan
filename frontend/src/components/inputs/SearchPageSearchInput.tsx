@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { detailedPropertyType } from "@/zodSchema/propertySchema";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { SearchPropertyResponseT } from "@/types/apiResponse";
+import { type SearchPropertyResponseT } from "@/types/apiResponse";
 interface SearchPageSearchInputProps {
   searchParams: SearchParams;
   pagination: SearchPropertyResponseT["pagination"];

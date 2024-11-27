@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { isNewlyListed } from "@/lib/utils/dateUtils";
-import { SearchPropertyResponseT } from "@/types/apiResponse";
+import { type SearchPropertyResponseT } from "@/types/apiResponse";
 import { CheckCircle } from "lucide-react";
 import Image from "next/image";
 import React from "react";

@@ -1,7 +1,7 @@
 import { getUserInfoGetApi } from "@/constant/apiRoutes";
 import { fetcher } from "@/lib/utils/apiUtils";
 import { getBackendUrl } from "@/lib/utils/stringUtils";
-import { UserBasicInfoResponseT } from "@/types/apiResponse";
+import { type UserBasicInfoResponseT } from "@/types/apiResponse";
 import useSWR from "swr";
 import { useAuthorization } from "./useAuthorization";
 

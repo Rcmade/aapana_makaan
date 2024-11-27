@@ -1,6 +1,9 @@
 import { deleteMediaPostApi } from "@/constant/apiRoutes";
 import { getAxiosErrorMessage, getBackendUrl } from "@/lib/utils/stringUtils";
-import { DeleteMediaRequestT, DeleteMediaResponseT } from "@/types/apiResponse";
+import {
+  type DeleteMediaRequestT,
+  type DeleteMediaResponseT,
+} from "@/types/apiResponse";
 import axios from "axios";
 
 export const deleteMedia = async (

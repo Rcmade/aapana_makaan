@@ -34,9 +34,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { uploadToCloudinary } from "@/lib/utils/cloudinaryUtils";
 import {
-  AddPropertyRequestT,
-  AddPropertyResponseT,
-  PropertyDetailsResponseT,
+type AddPropertyRequestT,
+type AddPropertyResponseT,
+type PropertyDetailsResponseT,
 } from "@/types/apiResponse";
 import axios from "axios";
 import { getAxiosErrorMessage, getBackendUrl } from "@/lib/utils/stringUtils";

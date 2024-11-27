@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { createQueryString } from "@/lib/utils/stringUtils";
 import {type PageProps } from "@/types";
-import { SearchPropertyResponseT } from "@/types/apiResponse";
+import { type SearchPropertyResponseT } from "@/types/apiResponse";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

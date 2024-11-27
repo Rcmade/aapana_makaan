@@ -8,10 +8,10 @@ import {
 import { fetcher } from "@/lib/utils/apiUtils";
 import { getBackendUrl } from "@/lib/utils/stringUtils";
 import {
-  GetPropertyResponseT,
-  PropertyDetailsResponseT,
-  TopOfferPropertyResponseT,
-  UserPropertyResponseT,
+  type GetPropertyResponseT,
+  type PropertyDetailsResponseT,
+  type TopOfferPropertyResponseT,
+  type UserPropertyResponseT,
 } from "@/types/apiResponse";
 import { headers } from "next/headers";
 

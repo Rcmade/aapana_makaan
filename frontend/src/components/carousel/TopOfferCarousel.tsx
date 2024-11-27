@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { TopOfferPropertyResponseT } from "@/types/apiResponse";
+import { type TopOfferPropertyResponseT } from "@/types/apiResponse";
 import PropertyCard from "@/components/card/PropertyCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import CarouselDotButton, { useDotButton } from "../buttons/CarouselDotButton";

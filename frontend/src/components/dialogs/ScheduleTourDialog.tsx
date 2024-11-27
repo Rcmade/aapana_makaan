@@ -47,12 +47,17 @@ import { scheduleTourPostApi } from "@/constant/apiRoutes";
 import { getAxiosErrorMessage, getBackendUrl } from "@/lib/utils/stringUtils";
 import axios from "axios";
 import {
-  ScheduleTourRequestT,
-  ScheduleTourResponseT,
+type ScheduleTourRequestT,
+type ScheduleTourResponseT,
 } from "@/types/apiResponse";
 import { toast } from "sonner";
 
-export default function ScheduleTourDialog() {
+interface ScheduleTourDialogProps {
+  propertyId: string;
+}
+export default function ScheduleTourDialog({
+  propertyId,
+}: ScheduleTourDialogProps) {
   const [open, setOpen] = React.useState(false);
   const store = useScheduleTourDialog();
 
@@ -60,6 +65,7 @@ export default function ScheduleTourDialog() {
     name: store.name,
     email: store.email,
     phone: store.phone,
+    propertyId: propertyId,
   };
   const form = useForm<ScheduleSchemaT>({
     resolver: zodResolver(scheduleSchema),
@@ -81,7 +87,7 @@ export default function ScheduleTourDialog() {
     }
   }
 
-  const isLoading = form.formState.isLoading;
+  const isLoading = form.formState.isSubmitting;
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

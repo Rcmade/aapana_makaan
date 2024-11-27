@@ -11,5 +11,7 @@ export const getTopOfferPropertyGetApi = "/property/top-offer";
 export const getPropertyDetailsGetApi = "/property/details";
 
 export const scheduleTourPostApi = "/schedule-tour/create-update-tour";
+export const sendInquiryMessagePostApi =
+  "/schedule-tour/create-update-property-inquiry-message";
 
 export const deleteMediaPostApi = "/media/delete-media";

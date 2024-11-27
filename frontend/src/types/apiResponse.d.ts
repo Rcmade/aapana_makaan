@@ -58,9 +58,15 @@ export type DeleteMediaResponseT = { message: string; };
 export type DeleteMediaRequestT = { propertyId?: string | undefined; mediaUrlOrId: string; };
 
 
-export type ScheduleTourResponseT = { message: string; data: { date: string; id: string; name: string; email: string; phone: string; createdAt: string; type: "In_Person" | "Video_Chat"; time: string; }; } | { message: string; data: null; };
+export type ScheduleTourResponseT = { message: string; data: { date: string; id: string; name: string; email: string; phone: string; createdAt: string; type: "In_Person" | "Video_Chat"; propertyId: string; time: string; }; type: string; } | { message: string; data: null; };
 
 
-export type ScheduleTourRequestT = { date: Date; name: string; email: string; phone: string; type: "In_Person" | "Video_Chat"; time: string; id?: string | undefined; createdAt?: Date | undefined; };
+export type ScheduleTourRequestT = { date: Date; name: string; email: string; phone: string; type: "In_Person" | "Video_Chat"; propertyId: string; time: string; id?: string | undefined; createdAt?: Date | undefined; };
+
+
+export type InquiryMessageResponseT = { message: string; data: { id: string; name: string; email: string; phone: string; createdAt: string; propertyId: string; message: string; }; type: string; } | { message: string; data: null; };
+
+
+export type InquiryMessageRequestT = { name: string; email: string; phone: string; propertyId: string; message: string; id?: string | undefined; createdAt?: Date | undefined; };
 
 

@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@auth/core':
         specifier: ^0.35.3
-        version: 0.35.3
+        version: 0.35.3(nodemailer@6.9.16)
       '@hono/auth-js':
         specifier: ^1.0.10
-        version: 1.0.14(@auth/core@0.35.3)(hono@4.6.9)(react@18.3.1)
+        version: 1.0.14(@auth/core@0.35.3(nodemailer@6.9.16))(hono@4.6.9)(react@18.3.1)
       '@hono/node-server':
         specifier: ^1.13.1
         version: 1.13.5(hono@4.6.9)
@@ -47,6 +47,9 @@ importers:
       nanoid:
         specifier: ^5.0.7
         version: 5.0.8
+      nodemailer:
+        specifier: ^6.9.16
+        version: 6.9.16
       postgres:
         specifier: '3.3'
         version: 3.3.5
@@ -72,6 +75,9 @@ importers:
       '@types/node':
         specifier: ^20.16.9
         version: 20.17.6
+      '@types/nodemailer':
+        specifier: ^6.4.17
+        version: 6.4.17
       drizzle-kit:
         specifier: npm:@binochoi/drizzle-kit@0.24.17
         version: '@binochoi/drizzle-kit@0.24.17'
@@ -728,6 +734,9 @@ packages:
   '@types/node@20.17.6':
     resolution: {integrity: sha512-VEI7OdvK2wP7XHnsuXbAJnEpEkF6NjSN45QJlL4VGqZSXsnicpesdTWsg9RISeSdYd3yeRj/y3k5KGjUXYnFwQ==}
 
+  '@types/nodemailer@6.4.17':
+    resolution: {integrity: sha512-I9CCaIp6DTldEg7vyUTZi8+9Vo0hi1/T8gv3C89yk1rSAAzoKQ8H8ki/jBYJSFoH/BisgLP8tkZMlQ91CIquww==}
+
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
     engines: {node: '>=0.4.0'}
@@ -1016,6 +1025,10 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
 
+  nodemailer@6.9.16:
+    resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
+    engines: {node: '>=6.0.0'}
+
   oauth4webapi@2.17.0:
     resolution: {integrity: sha512-lbC0Z7uzAFNFyzEYRIC+pkSVvDHJTbEW+dYlSBAlCYDe6RxUkJ26bClhk8ocBZip1wfI9uKTe0fm4Ib4RHn6uQ==}
 
@@ -1115,7 +1128,7 @@ packages:
 
 snapshots:
 
-  '@auth/core@0.35.3':
+  '@auth/core@0.35.3(nodemailer@6.9.16)':
     dependencies:
       '@panva/hkdf': 1.2.1
       '@types/cookie': 0.6.0
@@ -1124,6 +1137,8 @@ snapshots:
       oauth4webapi: 2.17.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
+    optionalDependencies:
+      nodemailer: 6.9.16
 
   '@binochoi/drizzle-kit@0.24.17':
     dependencies:
@@ -1427,9 +1442,9 @@ snapshots:
 
   '@faker-js/faker@9.2.0': {}
 
-  '@hono/auth-js@1.0.14(@auth/core@0.35.3)(hono@4.6.9)(react@18.3.1)':
+  '@hono/auth-js@1.0.14(@auth/core@0.35.3(nodemailer@6.9.16))(hono@4.6.9)(react@18.3.1)':
     dependencies:
-      '@auth/core': 0.35.3
+      '@auth/core': 0.35.3(nodemailer@6.9.16)
       hono: 4.6.9
       react: 18.3.1
 
@@ -1477,6 +1492,10 @@ snapshots:
   '@types/node@20.17.6':
     dependencies:
       undici-types: 6.19.8
+
+  '@types/nodemailer@6.4.17':
+    dependencies:
+      '@types/node': 20.17.6
 
   acorn@8.14.0: {}
 
@@ -1737,6 +1756,8 @@ snapshots:
   ms@2.1.3: {}
 
   nanoid@5.0.8: {}
+
+  nodemailer@6.9.16: {}
 
   oauth4webapi@2.17.0: {}
 

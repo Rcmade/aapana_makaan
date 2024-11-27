@@ -6,7 +6,7 @@ import { getUserDetailsInfoGetApi, getUserPropertiesGetApi } from "@/constant/ap
 import { fetcher } from "@/lib/utils/apiUtils";
 import { getBackendUrl } from "@/lib/utils/stringUtils";
 import { type RevalidationType } from "@/types";
-import { UserDetailedInfoResponseT } from "@/types/apiResponse";
+import {type  UserDetailedInfoResponseT } from "@/types/apiResponse";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 

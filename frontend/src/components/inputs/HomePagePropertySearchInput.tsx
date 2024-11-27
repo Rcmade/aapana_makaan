@@ -9,11 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import {
-  searchParamsToObject,
-} from "@/lib/utils/stringUtils";
-import { useRouter, useSearchParams } from "next/navigation";
-import { SearchPropertyRequestParamsT } from "@/types/apiResponse";
+import { useSearchParams } from "next/navigation";
 import {
   Select,
   SelectContent,

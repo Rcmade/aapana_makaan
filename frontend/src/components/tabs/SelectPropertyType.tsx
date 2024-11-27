@@ -1,7 +1,7 @@
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Building, House, LandPlot, LucideIcon } from "lucide-react";
-import { PropertyTypeE } from "@/types/apiResponse";
+import { type PropertyTypeE } from "@/types/apiResponse";
 
 interface SelectPropertyTypeProps {
   onChange: (value: PropertyTypeE) => void;

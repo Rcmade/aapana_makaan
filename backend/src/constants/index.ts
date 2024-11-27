@@ -54,3 +54,6 @@ export const mediaTypeArr = ["image", "video"] as const;
 export const propertySearchDistance = 0.45045045; //50 Km
 
 export const scheduleTypeArr = ["In_Person", "Video_Chat"] as const;
+
+
+export const webName = "Aapna_Makaan";

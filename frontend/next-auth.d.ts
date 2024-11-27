@@ -1,4 +1,4 @@
-import { UpsertUserResponseT } from "@/types/apiResponse";
+import { type UpsertUserResponseT } from "@/types/apiResponse";
 import { DefaultSession } from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {

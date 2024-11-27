@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {  Heart, MapPin, Phone, Mail, Square } from "lucide-react";
+import { Heart, MapPin, Phone, Mail, Square } from "lucide-react";
 import { type PagePropsPromise } from "@/types";
 import { getPropertyById } from "@/action/property";
 import PropertyImageView from "./_PropertyImageView";
@@ -22,6 +22,7 @@ import Link from "next/link";
 import { ShareButton } from "@/components/buttons/ShareButton";
 import { Metadata } from "next";
 import ScheduleTourDialog from "@/components/dialogs/ScheduleTourDialog";
+import PropertyInquiryMessageDialog from "@/components/dialogs/PropertyInquiryMessageDialog";
 
 const page = async ({ params }: PagePropsPromise) => {
   const { propertyId } = await params;
@@ -30,12 +31,6 @@ const page = async ({ params }: PagePropsPromise) => {
   if (!property)
     return <p className="text-center text-2xl">No Property Found</p>;
 
-  console.dir(
-    { property },
-    {
-      depth: Infinity,
-    },
-  );
   return (
     <>
       <div className="space-y-4">
@@ -133,11 +128,7 @@ const page = async ({ params }: PagePropsPromise) => {
             </div>
 
             <div className="space-y-4">
-              {/* <Button className="w-full" size="lg">
-                Schedule a visit
-              </Button> */}
-
-              <div className="space-y-2">
+              <div className="space-y-4">
                 <Button
                   variant="outline"
                   className="w-full justify-start gap-2"
@@ -152,7 +143,21 @@ const page = async ({ params }: PagePropsPromise) => {
                   <Mail className="h-4 w-4" />
                   {property.user?.email ? property.user.email : "N/A"}
                 </Button>
-                <ScheduleTourDialog />
+                <ScheduleTourDialog propertyId={property.id} />
+                <p className="text-center">It&apos;s free, cancel anytime</p>
+
+                <div className="h-4">
+                  <span className="relative flex h-[1px] w-full items-center justify-center bg-input">
+                    <span className="absolute bg-accent px-2">Or</span>
+                  </span>
+                </div>
+                <PropertyInquiryMessageDialog
+                  property={{
+                    completeAddress: property.completeAddress,
+                    name: property.name,
+                    id: property.id
+                  }}
+                />
               </div>
             </div>
           </div>

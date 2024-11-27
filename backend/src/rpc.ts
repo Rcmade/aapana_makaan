@@ -1,4 +1,8 @@
-import { PropertyFetchParams, ScheduleSchemaT } from "./types/index.d";
+import {
+  PropertyFetchParams,
+  PropertyInquiriesT,
+  ScheduleSchemaT,
+} from "./types/index.d";
 import { AppType } from ".";
 import { hc, InferResponseType, InferRequestType } from "hono/client";
 import {
@@ -88,5 +92,10 @@ export type DeleteMediaRequestT = Omit<DeleteMediaRequest, "userId">;
 export type ScheduleTourResponseT = InferResponseType<
   (typeof client.api)["schedule-tour"]["create-update-tour"]["$post"]
 >;
+export type ScheduleTourRequestT = ScheduleSchemaT;
 
-export type ScheduleTourRequestT = ScheduleSchemaT
+// InquiryMessage
+export type InquiryMessageResponseT = InferResponseType<
+  (typeof client.api)["schedule-tour"]["create-update-property-inquiry-message"]["$post"]
+>;
+export type InquiryMessageRequestT = PropertyInquiriesT;

@@ -1,11 +1,10 @@
 import {
-  LOGIN_REDIRECT,
   apiAuthPrefix,
   apiPrefixRoutes,
   authRoutes,
   publicRoutes,
   publicGroupRoute,
-  DEFAULT_AFTER_LOGIN_REDIRECT, // Import public group routes
+  homeUrl, // Import public group routes
 } from "./config/routesConfig";
 import authProvidersConfig from "@/config/authProvidersConfig";
 import NextAuth from "next-auth";
@@ -26,11 +25,11 @@ export default auth((req) => {
   const isApiRoute = nextUrl.pathname.startsWith(apiPrefixRoutes);
 
   // Check if the route matches public group routes
-  const isPublicGroupRoute = publicGroupRoute.some((route) =>
-    nextUrl.pathname.startsWith(route),
-  );
+  const isPublicGroupRoute = publicGroupRoute.some((route) => {
+    const routeRegex = new RegExp(`^${route}(\\/|$)`); // Match "/p" or "/p/...".
+    return routeRegex.test(nextUrl.pathname);
+  });
 
-  // Allow API routes and public group routes without processing
   if (isApiRoute || isApiAuthRoute || isPublicGroupRoute) {
     return NextResponse.next();
   }
@@ -38,7 +37,7 @@ export default auth((req) => {
   // Handle authenticated routes
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return NextResponse.redirect(new URL(LOGIN_REDIRECT, nextUrl));
+      return NextResponse.redirect(new URL(homeUrl, nextUrl));
     }
     return NextResponse.next();
   }
@@ -65,7 +64,7 @@ export default auth((req) => {
       callbackUrl += nextUrl.search;
     }
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-    return Response.redirect(
+    return NextResponse.redirect(
       new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
     );
   }

@@ -7,7 +7,7 @@ import {
 } from "@/lib/utils/stringUtils";
 import { type SearchPropertiesSchemaT } from "@/types";
 import { searchPropertiesSchema } from "@/zodSchema/searchSchema";
-import { SearchPropertyRequestParamsT } from "@/types/apiResponse";
+import { type SearchPropertyRequestParamsT } from "@/types/apiResponse";
 
 export const usePropertySearchForm = () => {
   const searchParams = useSearchParams();

@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { GetPropertyResponseT } from "@/types/apiResponse";
+import { type GetPropertyResponseT } from "@/types/apiResponse";
 import { CircleDot } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, ButtonProps } from "../ui/button";
 import { getCloudinaryId } from "@/lib/utils/cloudinaryUtils";
-import { DeleteMediaRequestT } from "@/types/apiResponse";
+import { type DeleteMediaRequestT } from "@/types/apiResponse";
 import { deleteMedia } from "@/action/media";
 import { toast } from "sonner";
 import { Trash } from "lucide-react";

@@ -1,7 +1,7 @@
 import { searchPropertiesGetApi } from "@/constant/apiRoutes";
 import { fetcher } from "@/lib/utils/apiUtils";
 import { getBackendUrl } from "@/lib/utils/stringUtils";
-import { SearchPropertyResponseT } from "@/types/apiResponse";
+import {type SearchPropertyResponseT } from "@/types/apiResponse";
 
 export const getPropertiesAction = async (
   searchParamsStr: string,

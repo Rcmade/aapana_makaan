@@ -1,7 +1,7 @@
 "use client";
 
 import useMapLoader from "@/hooks/useMapLoader";
-import { SearchPropertyResponseT } from "@/types/apiResponse";
+import { type SearchPropertyResponseT } from "@/types/apiResponse";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 import React, { useCallback, useEffect, useState } from "react";
 import PropertyCard from "../card/PropertyCard";

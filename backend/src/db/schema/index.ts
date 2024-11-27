@@ -7,4 +7,8 @@ export {
   mediaType,
   media,
 } from "./properties";
-export { scheduleType, scheduleSchema } from "./scheduleTour";
+export {
+  scheduleType,
+  scheduleSchema,
+  propertyInquiries,
+} from "./scheduleTour";
